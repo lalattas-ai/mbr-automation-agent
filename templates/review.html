@@ -3,60 +3,142 @@
 <head>
     <title>Review - MBR Automation Agent</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
-        h1 { color: #232f3e; }
-        .detail { margin-bottom: 15px; }
-        .label { font-weight: bold; }
-        .value { margin-left: 20px; }
-        button { background-color: #ff9900; color: white; padding: 10px 20px; 
-                 border: none; cursor: pointer; font-size: 16px; margin-right: 10px; }
-        button:hover { background-color: #ec7211; }
-        .back { background-color: #666; }
-        .back:hover { background-color: #444; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Amazon Ember', 'Helvetica Neue', Arial, sans-serif; 
+            background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { 
+            font-size: 2.5em; 
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        .header .subtitle {
+            color: #ff9900;
+            font-size: 1.1em;
+        }
+        .content { padding: 40px; }
+        .detail { 
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #ff9900;
+        }
+        .label { 
+            font-weight: 600;
+            color: #232f3e;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .value { 
+            color: #37475a;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        button { 
+            flex: 1;
+            padding: 15px 40px; 
+            border: none; 
+            border-radius: 4px;
+            cursor: pointer; 
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #ff9900 0%, #ec7211 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
+        }
+        button[type="submit"]:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
+        }
+        .back { 
+            background: #879596;
+            color: white;
+        }
+        .back:hover { 
+            background: #687078;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
-    <h1>Review Details</h1>
-    
-    <div class="detail">
-        <div class="label">Customer Name:</div>
-        <div class="value">{{ customer_name }}</div>
+    <div class="container">
+        <div class="header">
+            <h1>Review Details</h1>
+            <div class="subtitle">Verify your information before processing</div>
+        </div>
+        <div class="content">
+            
+            <div class="detail">
+                <div class="label">Customer Name</div>
+                <div class="value">{{ customer_name }}</div>
+            </div>
+            
+            <div class="detail">
+                <div class="label">Audience Type</div>
+                <div class="value">{{ audience_type }}</div>
+            </div>
+            
+            <div class="detail">
+                <div class="label">Presentation</div>
+                <div class="value">{{ presentation_name }}</div>
+            </div>
+            
+            {% if previous_mbr %}
+            <div class="detail">
+                <div class="label">Previous MBR Notes</div>
+                <div class="value">{{ previous_mbr }}</div>
+            </div>
+            {% endif %}
+            
+            {% if sa_notes %}
+            <div class="detail">
+                <div class="label">SA/CSM Notes</div>
+                <div class="value">{{ sa_notes }}</div>
+            </div>
+            {% endif %}
+            
+            {% if additional_text %}
+            <div class="detail">
+                <div class="label">Additional Context</div>
+                <div class="value">{{ additional_text }}</div>
+            </div>
+            {% endif %}
+            
+            <form method="POST" action="/process">
+                <div class="button-group">
+                    <button type="button" class="back" onclick="window.location.href='/'">← Back</button>
+                    <button type="submit">Process Presentation →</button>
+                </div>
+            </form>
+        </div>
     </div>
-    
-    <div class="detail">
-        <div class="label">Audience Type:</div>
-        <div class="value">{{ audience_type }}</div>
-    </div>
-    
-    <div class="detail">
-        <div class="label">Presentation:</div>
-        <div class="value">{{ presentation_name }}</div>
-    </div>
-    
-    {% if previous_mbr %}
-    <div class="detail">
-        <div class="label">Previous MBR Notes:</div>
-        <div class="value">{{ previous_mbr }}</div>
-    </div>
-    {% endif %}
-    
-    {% if sa_notes %}
-    <div class="detail">
-        <div class="label">SA/CSM Notes:</div>
-        <div class="value">{{ sa_notes }}</div>
-    </div>
-    {% endif %}
-    
-    {% if additional_text %}
-    <div class="detail">
-        <div class="label">Additional Context:</div>
-        <div class="value">{{ additional_text }}</div>
-    </div>
-    {% endif %}
-    
-    <form method="POST" action="/process">
-        <button type="submit">Process Presentation</button>
-        <button type="button" class="back" onclick="window.location.href='/'">Back</button>
-    </form>
 </body>
 </html>
