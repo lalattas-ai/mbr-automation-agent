@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Follow-up Materials - MBR Automation Agent</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 50px auto; padding: 20px; }
+        h1 { color: #232f3e; }
+        .section { 
+            margin: 30px 0; padding: 20px; 
+            background: #f9f9f9; border: 1px solid #ddd; border-radius: 5px;
+        }
+        .email-draft { 
+            background: white; padding: 15px; 
+            border: 1px solid #ccc; white-space: pre-wrap;
+            font-family: 'Courier New', monospace; font-size: 14px;
+        }
+        button, a.button { 
+            background-color: #ff9900; color: white; padding: 10px 20px; 
+            border: none; cursor: pointer; font-size: 16px; margin: 10px 10px 10px 0;
+            text-decoration: none; display: inline-block;
+        }
+        button:hover, a.button:hover { background-color: #ec7211; }
+        .copy-btn { background-color: #232f3e; }
+        .copy-btn:hover { background-color: #131a22; }
+    </style>
+</head>
+<body>
+    <h1>Follow-up Materials Generated</h1>
+    
+    <div class="section">
+        <h2>Email Draft</h2>
+        <div class="email-draft" id="emailDraft">{{ email_draft }}</div>
+        <button class="copy-btn" onclick="copyToClipboard('emailDraft')">Copy Email</button>
+        <a href="/download/{{ email_file }}" class="button">Download Email</a>
+    </div>
+    
+    <div class="section">
+        <h2>Implementation Guide</h2>
+        <p>A detailed implementation guide has been generated for the agreed action items.</p>
+        <a href="/download/{{ guide_file }}" class="button">Download Implementation Guide</a>
+    </div>
+    
+    <button onclick="window.location.href='/'">Process Another Presentation</button>
+    
+    <script>
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

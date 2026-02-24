@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review - MBR Automation Agent</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        h1 { color: #232f3e; }
+        .detail { margin-bottom: 15px; }
+        .label { font-weight: bold; }
+        .value { margin-left: 20px; }
+        button { background-color: #ff9900; color: white; padding: 10px 20px; 
+                 border: none; cursor: pointer; font-size: 16px; margin-right: 10px; }
+        button:hover { background-color: #ec7211; }
+        .back { background-color: #666; }
+        .back:hover { background-color: #444; }
+    </style>
+</head>
+<body>
+    <h1>Review Details</h1>
+    
+    <div class="detail">
+        <div class="label">Customer Name:</div>
+        <div class="value">{{ customer_name }}</div>
+    </div>
+    
+    <div class="detail">
+        <div class="label">Audience Type:</div>
+        <div class="value">{{ audience_type }}</div>
+    </div>
+    
+    <div class="detail">
+        <div class="label">Presentation:</div>
+        <div class="value">{{ presentation_name }}</div>
+    </div>
+    
+    {% if previous_mbr %}
+    <div class="detail">
+        <div class="label">Previous MBR Notes:</div>
+        <div class="value">{{ previous_mbr }}</div>
+    </div>
+    {% endif %}
+    
+    {% if sa_notes %}
+    <div class="detail">
+        <div class="label">SA/CSM Notes:</div>
+        <div class="value">{{ sa_notes }}</div>
+    </div>
+    {% endif %}
+    
+    {% if additional_text %}
+    <div class="detail">
+        <div class="label">Additional Context:</div>
+        <div class="value">{{ additional_text }}</div>
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/process">
+        <button type="submit">Process Presentation</button>
+        <button type="button" class="back" onclick="window.location.href='/'">Back</button>
+    </form>
+</body>
+</html>
